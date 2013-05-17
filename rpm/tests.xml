@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testdefinition version="1.0">
+	<suite name="exempi_tests">
+		<description>Exempi tests</description>
+		<set name="exempi_core_tests">
+			<case name="exempi_dumpmainxmp_BlueSquare.ai">
+				<step>/opt/tests/exempi/bin/dumpmainxmp /opt/tests/exempi/data/BlueSquare.ai</step>
+			</case>
+			<case name="exempi_dumpmainxmp_BlueSquare.eps">
+				<step>/opt/tests/exempi/bin/dumpmainxmp /opt/tests/exempi/data/BlueSquare.eps</step>
+			</case>
+			<case name="exempi_dumpmainxmp_BlueSquare.indd">
+				<step>/opt/tests/exempi/bin/dumpmainxmp /opt/tests/exempi/data/BlueSquare.indd</step>
+			</case>
+			<case name="exempi_dumpmainxmp_BlueSquare.mov">
+				<step>/opt/tests/exempi/bin/dumpmainxmp /opt/tests/exempi/data/BlueSquare.mov</step>
+			</case>
+			<case name="exempi_dumpmainxmp_BlueSquare.pdf">
+				<step>/opt/tests/exempi/bin/dumpmainxmp /opt/tests/exempi/data/BlueSquare.pdf</step>
+			</case>
+			<case name="exempi_dumpmainxmp_BlueSquare.psd">
+				<step>/opt/tests/exempi/bin/dumpmainxmp /opt/tests/exempi/data/BlueSquare.psd</step>
+			</case>
+			<case name="exempi_dumpmainxmp_BlueSquare.wav">
+				<step>/opt/tests/exempi/bin/dumpmainxmp /opt/tests/exempi/data/BlueSquare.wav</step>
+			</case>
+			<case name="exempi_dumpmainxmp_test1.xmp">
+				<step>/opt/tests/exempi/bin/dumpmainxmp /opt/tests/exempi/data/test1.xmp</step>
+			</case>
+			<case name="exempi_dumpmainxmp_BlueSquare.avi">
+				<step>/opt/tests/exempi/bin/dumpmainxmp /opt/tests/exempi/data/BlueSquare.avi</step>
+			</case>
+			<case name="exempi_dumpmainxmp_BlueSquare.gif">
+				<step>/opt/tests/exempi/bin/dumpmainxmp /opt/tests/exempi/data/BlueSquare.gif</step>
+			</case>
+			<case name="exempi_dumpmainxmp_BlueSquare.jpg">
+				<step>/opt/tests/exempi/bin/dumpmainxmp /opt/tests/exempi/data/BlueSquare.jpg</step>
+			</case>
+			<case name="exempi_dumpmainxmp_BlueSquare.mp3">
+				<step>/opt/tests/exempi/bin/dumpmainxmp /opt/tests/exempi/data/BlueSquare.mp3</step>
+			</case>
+			<case name="exempi_dumpmainxmp_BlueSquare.png">
+				<step>/opt/tests/exempi/bin/dumpmainxmp /opt/tests/exempi/data/BlueSquare.png</step>
+			</case>
+			<case name="exempi_dumpmainxmp_BlueSquare.tif">
+				<step>/opt/tests/exempi/bin/dumpmainxmp /opt/tests/exempi/data/BlueSquare.tif</step>
+			</case>
+			<case name="exempi_dumpmainxmp_fdo18635.jpg">
+				<step>/opt/tests/exempi/bin/dumpmainxmp /opt/tests/exempi/data/fdo18635.jpg</step>
+			</case>
+		</set>
+		<set name="exempi_unit_tests">
+			<case name="exempi_test3">
+				<step>/opt/tests/exempi/bin/test3 /opt/tests/exempi/data/test1.xmp</step>
+			</case>
+			<case name="exempi_testcpp">
+				<step>/opt/tests/exempi/bin/testcpp</step>
+			</case>
+			<case name="exempi_testexempicore">
+				<step>/opt/tests/exempi/bin/testexempicore /opt/tests/exempi/data/test1.xmp</step>
+			</case>
+			<case name="exempi_testfdo18635">
+				<step>/opt/tests/exempi/bin/testfdo18635 /opt/tests/exempi/data/fdo18635.jpg</step>
+			</case>
+			<case name="exempi_testinit">
+				<step>/opt/tests/exempi/bin/testinit /opt/tests/exempi/data/test1.xmp</step>
+			</case>
+			<case name="exempi_testserialise">
+				<step>/opt/tests/exempi/bin/testserialise /opt/tests/exempi/data/test1.xmp</step>
+			</case>
+			<case name="exempi_testtiffleak">
+				<step>/opt/tests/exempi/bin/testtiffleak /opt/tests/exempi/data/BlueSquare.tif</step>
+			</case>
+			<case name="exempi_testwritenewprop">
+				<step>/opt/tests/exempi/bin/testwritenewprop /opt/tests/exempi/data/test1.xmp</step>
+			</case>
+			<case name="exempi_testxmpfiles">
+				<step>/opt/tests/exempi/bin/testxmpfiles /opt/tests/exempi/data/BlueSquare.jpg</step>
+			</case>
+			<case name="exempi_testxmpfileswrite_BlueSquare.jpg">
+				<step>/opt/tests/exempi/bin/testxmpfileswrite /opt/tests/exempi/data/BlueSquare.jpg</step>
+				<step>rm test.jpg</step>
+			</case>
+			<case name="exempi_testxmpfileswrite_fdo18635.jpg">
+				<step>/opt/tests/exempi/bin/testxmpfileswrite /opt/tests/exempi/data/fdo18635.jpg</step>
+				<step>rm test.jpg</step>
+			</case>
+		</set>
+	</suite>
+</testdefinition>

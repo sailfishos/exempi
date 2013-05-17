@@ -1,0 +1,3 @@
+[submodule "exempi"]
+	path = exempi
+	url = http://anongit.freedesktop.org/git/exempi.git/
