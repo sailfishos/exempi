@@ -20,7 +20,11 @@ PkgConfigBR:
 PkgBR:
     - boost-devel
 SetupOptions: -q -n %{name}-%{version}/exempi
-Configure: none
+Configure: autogen
+ConfigOptions:
+    - LDFLAGS="-L%{_libdir}"
+    - CPPFLAGS="-I%{_includedir}" 
+    - --enable-unittest
 Builder: none
 SubPackages:
     - Name: devel

@@ -61,13 +61,16 @@ This package contains the tests and tests.xml for %{name}
 # >> build pre
 # nemo-tests-install.patch changes some of the Makefile.am
 # so a autoreconf is needed to generate the new Makefile.in
-autoreconf
 # << build pre
 
+%autogen --disable-static
+%configure --disable-static \
+    LDFLAGS="-L%{_libdir}" \
+    CPPFLAGS="-I%{_includedir}" \
+    --enable-unittest
 
 
 # >> build post
-%configure LDFLAGS="-L%{_libdir}" CPPFLAGS="-I%{_includedir}" --enable-unittest
 # Disable rpath
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
