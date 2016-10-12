@@ -1,6 +1,7 @@
-diff -Naur exempi-2.2.0/exempi/Makefile.am exempi-2.2.0-nemo-testing/exempi/Makefile.am
---- exempi-2.2.0/exempi/Makefile.am	2011-11-13 06:57:42.000000000 +0000
-+++ exempi-2.2.0-nemo-testing/exempi/Makefile.am	2013-04-29 13:57:00.690877766 +0000
+diff --git a/exempi/Makefile.am b/exempi/Makefile.am
+index ef7bc99..4aeca81 100644
+--- a/exempi/Makefile.am
++++ b/exempi/Makefile.am
 @@ -34,7 +34,7 @@
  # OF THE POSSIBILITY OF SUCH DAMAGE.
  #
@@ -10,35 +11,25 @@ diff -Naur exempi-2.2.0/exempi/Makefile.am exempi-2.2.0-nemo-testing/exempi/Make
  DIST_SUBDIRS = tests doc
  
  exempidir = $(includedir)/@EXEMPI_INCLUDE_BASE@/exempi
-diff -Naur exempi-2.2.0/exempi/tests/Makefile.am exempi-2.2.0-nemo-testing/exempi/tests/Makefile.am
---- exempi-2.2.0/exempi/tests/Makefile.am	2011-11-13 06:57:42.000000000 +0000
-+++ exempi-2.2.0-nemo-testing/exempi/tests/Makefile.am	2013-04-29 14:04:50.880273549 +0000
-@@ -54,7 +54,6 @@
- EXTRA_DIST = $(check_DATA) $(check_SCRIPTS)
- CLEANFILES = test.jpg
- 
--
- testinit_SOURCES = testinit.cpp utils.cpp
- testinit_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@
- testinit_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@
-@@ -93,4 +92,11 @@
- 
+diff --git a/exempi/tests/Makefile.am b/exempi/tests/Makefile.am
+index 44bb3df..9e6855f 100644
+--- a/exempi/tests/Makefile.am
++++ b/exempi/tests/Makefile.am
+@@ -98,3 +98,9 @@ testfdo83313_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@
  testcpp_SOURCES = testcpp.cpp utils.cpp
  testcpp_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@
--testcpp_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@
-\ No newline at end of file
-+testcpp_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@
+ testcpp_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@
 +
 +nemotestsbindir = /opt/tests/exempi/bin
 +nemotestsdatadir = /opt/tests/exempi/data
 +
-+nemotestsbin_PROGRAMS = $(check_PROGRAMS) 
++nemotestsbin_PROGRAMS = $(check_PROGRAMS)
 +nemotestsdata_DATA = test1.xmp fdo18635.jpg
-+
-diff -Naur exempi-2.2.0/exempi/tests/test-tiff-leak.cpp exempi-2.2.0-nemo-testing/exempi/tests/test-tiff-leak.cpp
---- exempi-2.2.0/exempi/tests/test-tiff-leak.cpp	2011-11-13 06:57:42.000000000 +0000
-+++ exempi-2.2.0-nemo-testing/exempi/tests/test-tiff-leak.cpp	2013-04-30 06:20:45.601155973 +0000
-@@ -55,8 +55,9 @@
+diff --git a/exempi/tests/test-tiff-leak.cpp b/exempi/tests/test-tiff-leak.cpp
+index 53030cc..7df9965 100644
+--- a/exempi/tests/test-tiff-leak.cpp
++++ b/exempi/tests/test-tiff-leak.cpp
+@@ -55,8 +55,9 @@ int test_main(int argc, char *argv[])
  {
  	prepare_test(argc, argv, "../../samples/testfiles/BlueSquare.jpg");
  
@@ -50,9 +41,10 @@ diff -Naur exempi-2.2.0/exempi/tests/test-tiff-leak.cpp exempi-2.2.0-nemo-testin
  	BOOST_CHECK(copy_file(orig_tiff_file, "test.tif"));
  	BOOST_CHECK(chmod("test.tif", S_IRUSR|S_IWUSR) == 0);
  	BOOST_CHECK(xmp_init());
-diff -Naur exempi-2.2.0/samples/Makefile.am exempi-2.2.0-nemo-testing/samples/Makefile.am
---- exempi-2.2.0/samples/Makefile.am	2011-11-13 06:57:42.000000000 +0000
-+++ exempi-2.2.0-nemo-testing/samples/Makefile.am	2013-04-29 13:33:24.075603233 +0000
+diff --git a/samples/Makefile.am b/samples/Makefile.am
+index 5f583f5..265c3d6 100644
+--- a/samples/Makefile.am
++++ b/samples/Makefile.am
 @@ -35,5 +35,5 @@
  #
  
@@ -60,9 +52,10 @@ diff -Naur exempi-2.2.0/samples/Makefile.am exempi-2.2.0-nemo-testing/samples/Ma
 -SUBDIRS = source
 +SUBDIRS = source testfiles
  DIST_SUBDIRS = source testfiles
-diff -Naur exempi-2.2.0/samples/source/Makefile.am exempi-2.2.0-nemo-testing/samples/source/Makefile.am
---- exempi-2.2.0/samples/source/Makefile.am	2012-01-22 07:49:31.000000000 +0000
-+++ exempi-2.2.0-nemo-testing/samples/source/Makefile.am	2013-04-29 13:38:43.737565580 +0000
+diff --git a/samples/source/Makefile.am b/samples/source/Makefile.am
+index 99caf5c..01e4037 100644
+--- a/samples/source/Makefile.am
++++ b/samples/source/Makefile.am
 @@ -35,13 +35,16 @@
  #
  
@@ -81,16 +74,17 @@ diff -Naur exempi-2.2.0/samples/source/Makefile.am exempi-2.2.0-nemo-testing/sam
  AM_CXXFLAGS = -fexceptions -funsigned-char -fPIC \
  	-Wno-multichar -Wno-ctor-dtor-privacy
  
-@@ -85,4 +88,4 @@
+@@ -85,4 +88,4 @@ xmpcommandtool_SOURCES = xmpcommand/Actions.cpp xmpcommand/Actions.h \
  	xmpcommand/PrintUsage.cpp xmpcommand/PrintUsage.h \
  	xmpcommand/XMPCommand.cpp \
  	$(NULL)
 -xmpcommandtool_LDADD = $(XMPLIBS) libsamplescommon.la
 \ No newline at end of file
 +xmpcommandtool_LDADD = $(XMPLIBS) libsamplescommon.la
-diff -Naur exempi-2.2.0/samples/testfiles/Makefile.am exempi-2.2.0-nemo-testing/samples/testfiles/Makefile.am
---- exempi-2.2.0/samples/testfiles/Makefile.am	2011-11-13 06:57:42.000000000 +0000
-+++ exempi-2.2.0-nemo-testing/samples/testfiles/Makefile.am	2013-04-29 13:42:30.208257700 +0000
+diff --git a/samples/testfiles/Makefile.am b/samples/testfiles/Makefile.am
+index 1aa0f57..2141a64 100644
+--- a/samples/testfiles/Makefile.am
++++ b/samples/testfiles/Makefile.am
 @@ -37,3 +37,7 @@
  
  EXTRA_DIST=BlueSquare.ai   BlueSquare.eps   BlueSquare.gif BlueSquare.jpg  BlueSquare.mp3  BlueSquare.png  BlueSquare.tif\
