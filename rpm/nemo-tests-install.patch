@@ -1,5 +1,5 @@
 diff --git a/exempi/Makefile.am b/exempi/Makefile.am
-index ef7bc99..4aeca81 100644
+index 4a65f91..9354863 100644
 --- a/exempi/Makefile.am
 +++ b/exempi/Makefile.am
 @@ -34,7 +34,7 @@
@@ -12,35 +12,38 @@ index ef7bc99..4aeca81 100644
  
  exempidir = $(includedir)/@EXEMPI_INCLUDE_BASE@/exempi
 diff --git a/exempi/tests/Makefile.am b/exempi/tests/Makefile.am
-index 44bb3df..9e6855f 100644
+index 7c92001..89b70d1 100644
 --- a/exempi/tests/Makefile.am
 +++ b/exempi/tests/Makefile.am
-@@ -98,3 +98,9 @@ testfdo83313_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@
- testcpp_SOURCES = testcpp.cpp utils.cpp
+@@ -109,6 +109,12 @@ testcpp_SOURCES = testcpp.cpp utils.cpp
  testcpp_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@
  testcpp_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@
-+
+ 
 +nemotestsbindir = /opt/tests/exempi/bin
 +nemotestsdatadir = /opt/tests/exempi/data
 +
 +nemotestsbin_PROGRAMS = $(check_PROGRAMS)
 +nemotestsdata_DATA = test1.xmp fdo18635.jpg
++
+ testwebp_SOURCES = test-webp.cpp utils.cpp
+ testwebp_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@
+ testwebp_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@
 diff --git a/exempi/tests/test-tiff-leak.cpp b/exempi/tests/test-tiff-leak.cpp
-index 53030cc..7df9965 100644
+index 729cced..d8341a2 100644
 --- a/exempi/tests/test-tiff-leak.cpp
 +++ b/exempi/tests/test-tiff-leak.cpp
-@@ -55,8 +55,9 @@ int test_main(int argc, char *argv[])
+@@ -54,8 +54,9 @@ int test_main(int argc, char *argv[])
  {
- 	prepare_test(argc, argv, "../../samples/testfiles/BlueSquare.jpg");
+   prepare_test(argc, argv, "../../samples/testfiles/BlueSquare.jpg");
  
--	std::string orig_tiff_file = g_src_testdir 
--		+ "../../samples/testfiles/BlueSquare.tif";
-+	//std::string orig_tiff_file = g_src_testdir 
-+	//	+ "../../samples/testfiles/BlueSquare.tif";
-+	std::string orig_tiff_file = "/opt/tests/exempi/data/BlueSquare.tif";
- 	BOOST_CHECK(copy_file(orig_tiff_file, "test.tif"));
- 	BOOST_CHECK(chmod("test.tif", S_IRUSR|S_IWUSR) == 0);
- 	BOOST_CHECK(xmp_init());
+-  std::string orig_tiff_file =
+-    g_src_testdir + "../../samples/testfiles/BlueSquare.tif";
++  //std::string orig_tiff_file =
++  //  g_src_testdir + "../../samples/testfiles/BlueSquare.tif";
++  std::string orig_tiff_file = "/opt/tests/exempi/data/BlueSquare.tif";
+   BOOST_CHECK(copy_file(orig_tiff_file, "test.tif"));
+   BOOST_CHECK(chmod("test.tif", S_IRUSR | S_IWUSR) == 0);
+   BOOST_CHECK(xmp_init());
 diff --git a/samples/Makefile.am b/samples/Makefile.am
 index 5f583f5..265c3d6 100644
 --- a/samples/Makefile.am
@@ -53,7 +56,7 @@ index 5f583f5..265c3d6 100644
 +SUBDIRS = source testfiles
  DIST_SUBDIRS = source testfiles
 diff --git a/samples/source/Makefile.am b/samples/source/Makefile.am
-index 99caf5c..01e4037 100644
+index 5ebc13d..ca71544 100644
 --- a/samples/source/Makefile.am
 +++ b/samples/source/Makefile.am
 @@ -35,13 +35,16 @@
@@ -73,22 +76,15 @@ index 99caf5c..01e4037 100644
 +
  AM_CXXFLAGS = -fexceptions -funsigned-char -fPIC \
  	-Wno-multichar -Wno-ctor-dtor-privacy
- 
-@@ -85,4 +88,4 @@ xmpcommandtool_SOURCES = xmpcommand/Actions.cpp xmpcommand/Actions.h \
- 	xmpcommand/PrintUsage.cpp xmpcommand/PrintUsage.h \
- 	xmpcommand/XMPCommand.cpp \
- 	$(NULL)
--xmpcommandtool_LDADD = $(XMPLIBS) libsamplescommon.la
-\ No newline at end of file
-+xmpcommandtool_LDADD = $(XMPLIBS) libsamplescommon.la
+ AM_CPPFLAGS = -I$(top_srcdir)/public/include -I$(top_srcdir) \
 diff --git a/samples/testfiles/Makefile.am b/samples/testfiles/Makefile.am
-index 1aa0f57..2141a64 100644
+index 791f4be..26a33d7 100644
 --- a/samples/testfiles/Makefile.am
 +++ b/samples/testfiles/Makefile.am
 @@ -37,3 +37,7 @@
  
  EXTRA_DIST=BlueSquare.ai   BlueSquare.eps   BlueSquare.gif BlueSquare.jpg  BlueSquare.mp3  BlueSquare.png  BlueSquare.tif\
- BlueSquare.avi  BlueSquare.indd  BlueSquare.mov  BlueSquare.pdf  BlueSquare.psd  BlueSquare.wav
+ BlueSquare.avi  BlueSquare.indd  BlueSquare.mov  BlueSquare.pdf  BlueSquare.psd  BlueSquare.wav BlueSquare.webp
 +
 +nemotestsdatadir = /opt/tests/exempi/data
 +nemotestsdata_DATA = $(EXTRA_DIST)
