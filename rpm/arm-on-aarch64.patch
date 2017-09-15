@@ -1,0 +1,130 @@
+diff --git a/XMPFiles/source/FormatSupport/MOOV_Support.hpp b/XMPFiles/source/FormatSupport/MOOV_Support.hpp
+index 7d34ca2..f948c69 100644
+--- a/XMPFiles/source/FormatSupport/MOOV_Support.hpp
++++ b/XMPFiles/source/FormatSupport/MOOV_Support.hpp
+@@ -166,9 +166,9 @@ public:
+ 
+ 	#pragma pack( pop )
+ 
+-#if SUNOS_SPARC || XMP_IOS_ARM
++#if SUNOS_SPARC || XMP_IOS_ARM || ARM_ON_AARCH64
+ 	#pragma pack( )
+-#endif //#if SUNOS_SPARC || XMP_IOS_ARM
++#endif //#if SUNOS_SPARC || XMP_IOS_ARM || ARM_ON_AARCH64
+ 
+ 	// ---------------------------------------------------------------------------------------------
+ 
+diff --git a/XMPFiles/source/FormatSupport/ReconcileTIFF.cpp b/XMPFiles/source/FormatSupport/ReconcileTIFF.cpp
+index 7e89b0e..2b09bef 100644
+--- a/XMPFiles/source/FormatSupport/ReconcileTIFF.cpp
++++ b/XMPFiles/source/FormatSupport/ReconcileTIFF.cpp
+@@ -469,12 +469,12 @@ ImportSingleTIFF_SRational ( const TIFF_Manager::TagInfo & tagInfo, const bool n
+ {
+ 	try {	// Don't let errors with one stop the others.
+ 
+-#if SUNOS_SPARC || XMP_IOS_ARM
++#if SUNOS_SPARC || XMP_IOS_ARM || ARM_ON_AARCH64
+         XMP_Uns32  binPtr[2];
+         memcpy(&binPtr, tagInfo.dataPtr, sizeof(XMP_Uns32)*2);
+ #else
+ 	XMP_Uns32 * binPtr = (XMP_Uns32*)tagInfo.dataPtr;
+-#endif //#if SUNOS_SPARC || XMP_IOS_ARM
++#endif //#if SUNOS_SPARC || XMP_IOS_ARM || ARM_ON_AARCH64
+ 		XMP_Int32 binNum   = GetUns32AsIs ( &binPtr[0] );
+ 		XMP_Int32 binDenom = GetUns32AsIs ( &binPtr[1] );
+ 		if ( ! nativeEndian ) {
+diff --git a/XMPFiles/source/FormatSupport/TIFF_MemoryReader.cpp b/XMPFiles/source/FormatSupport/TIFF_MemoryReader.cpp
+index fcf9e43..5bc415b 100644
+--- a/XMPFiles/source/FormatSupport/TIFF_MemoryReader.cpp
++++ b/XMPFiles/source/FormatSupport/TIFF_MemoryReader.cpp
+@@ -93,7 +93,7 @@ void TIFF_MemoryReader::SortIFD ( TweakedIFDInfo* thisIFD )
+ 			} else {
+ 
+ 				// Move the out of order entry to position j+1, move the middle of the array down.
+-				#if ! (SUNOS_SPARC || XMP_IOS_ARM)
++				#if ! (SUNOS_SPARC || XMP_IOS_ARM || ARM_ON_AARCH64)
+ 					TweakedIFDEntry temp = ifdEntries[i];
+ 					++j;	// ! So the insertion index becomes j.
+ 					memmove ( &ifdEntries[j+1], &ifdEntries[j], 12*(i-j) );	// FAILED -- AUDIT: Safe, moving less than i entries to a location before i.
+@@ -659,7 +659,7 @@ XMP_Uns32 TIFF_MemoryReader::ProcessOneIFD ( XMP_Uns32 ifdOffset, XMP_Uns8 ifd )
+ 
+ 		if ( (GetUns16AsIs(&thisEntry->type) < kTIFF_ByteType) || (GetUns16AsIs(&thisEntry->type) > kTIFF_LastType) ) continue;	// Bad type, skip this tag.
+ 
+-		#if ! (SUNOS_SPARC || XMP_IOS_ARM)
++		#if ! (SUNOS_SPARC || XMP_IOS_ARM || ARM_ON_AARCH64)
+ 	
+ 			thisEntry->bytes *= (XMP_Uns32)kTIFF_TypeSizes[thisEntry->type];
+ 			if ( thisEntry->bytes > 4 ) {
+diff --git a/public/include/XMP_Environment.h b/public/include/XMP_Environment.h
+index d8bab98..4828b3e 100644
+--- a/public/include/XMP_Environment.h
++++ b/public/include/XMP_Environment.h
+@@ -152,6 +152,12 @@
+ // UNIX Specific Settings
+ // ======================
+ #if (XMP_UNIXBuild)
++	// support running arm binaries on aarch64
++	#if (__arm__)
++		#define ARM_ON_AARCH64 1
++	#else
++		#define ARM_ON_AARCH64 0
++	#endif
+ 	#define XMP_HELPER_DLL_IMPORT
+ 	#define XMP_HELPER_DLL_EXPORT
+ 	#define XMP_HELPER_DLL_PRIVATE
+diff --git a/source/EndianUtils.hpp b/source/EndianUtils.hpp
+index 6581f18..b95eaa1 100644
+--- a/source/EndianUtils.hpp
++++ b/source/EndianUtils.hpp
+@@ -13,9 +13,9 @@
+ #include "public/include/XMP_Environment.h"	// ! This must be the first include.
+ #include "public/include/XMP_Const.h"
+ 
+-#if SUNOS_SPARC || SUNOS || XMP_IOS_ARM
++#if SUNOS_SPARC || SUNOS || XMP_IOS_ARM || ARM_ON_AARCH64
+ #include "string.h"
+-#endif //SUNOS_SPARC || SUNOS || XMP_IOS_ARM
++#endif //SUNOS_SPARC || SUNOS || XMP_IOS_ARM || ARM_ON_AARCH64
+ 
+ // *** These should be in a more common location. The Unicode conversions of XMPCore have similar utils. 
+ // *** May want to improve with PowerPC swapping load/store, or SSE instructions.
+@@ -62,7 +62,7 @@ typedef void (*PutDouble_Proc) ( double value, void* addr );
+ 
+ // =================================================================================================
+ 
+-#if SUNOS_SPARC || SUNOS || XMP_IOS_ARM
++#if SUNOS_SPARC || SUNOS || XMP_IOS_ARM || ARM_ON_AARCH64
+ 	#define DefineAndGetValue(type,addr)	type value = 0; memcpy ( &value, addr, sizeof(type) )
+ 	#define DefineAndSetValue(type,addr)	memcpy(addr, &value, sizeof(type))
+ 	#define DefineFlipAndSet(type,x,addr)	type temp; memcpy(&temp, addr, sizeof(type)); temp = Flip##x(temp); memcpy(addr, &temp, sizeof(type))
+@@ -70,7 +70,7 @@ typedef void (*PutDouble_Proc) ( double value, void* addr );
+ 	#define DefineAndGetValue(type,addr)	type value = *((type*)addr)
+ 	#define DefineAndSetValue(type,addr)	*((type*)addr) = value
+ 	#define DefineFlipAndSet(type,x,addr)	type* uPtr = (type*) addr; *uPtr = Flip##x ( *uPtr )
+-#endif //#if SUNOS_SPARC || SUNOS || XMP_IOS_ARM
++#endif //#if SUNOS_SPARC || SUNOS || XMP_IOS_ARM || ARM_ON_AARCH64
+ 
+ // -------------------------------------------------------------------------------------------------
+ 
+diff --git a/source/UnicodeConversions.cpp b/source/UnicodeConversions.cpp
+index b4de085..5ebf44f 100644
+--- a/source/UnicodeConversions.cpp
++++ b/source/UnicodeConversions.cpp
+@@ -13,7 +13,7 @@
+ 
+ #include "source/UnicodeConversions.hpp"
+ 
+-#if SUNOS_SPARC || XMP_IOS_ARM
++#if SUNOS_SPARC || XMP_IOS_ARM || ARM_ON_AARCH64
+ 	#include "string.h"
+ #endif
+ 
+@@ -218,7 +218,7 @@ void InitializeUnicodeConversions()
+ 
+ // =================================================================================================
+ 
+-#if SUNOS_SPARC || XMP_IOS_ARM
++#if SUNOS_SPARC || XMP_IOS_ARM || ARM_ON_AARCH64
+ 	#define DefineAndGetValue(type,inPtr) type inUnit; memcpy ( &inUnit, inPtr, sizeof(type) ); 
+ #else
+ 	#define DefineAndGetValue(type,inPtr) type inUnit = *((type *)inPtr); 

@@ -1,6 +1,6 @@
 Name:       exempi
 Summary:    Library for easy parsing of XMP metadata
-Version:    2.3.0
+Version:    2.4.3
 Release:    1
 Group:      System/Libraries
 License:    BSD
@@ -8,6 +8,7 @@ URL:        http://libopenraw.freedesktop.org/wiki/Exempi
 Source0:    http://libopenraw.freedesktop.org/download/%{name}-%{version}.tar.bz2
 Source1:    tests.xml
 Patch0:     nemo-tests-install.patch
+Patch1:     arm-on-aarch64.patch
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 BuildRequires:  pkgconfig(expat)
@@ -44,6 +45,7 @@ This package contains the tests and tests.xml for %{name}
 
 # nemo-tests-install.patch
 %patch0 -p1
+%patch1 -p1
 
 %build
 # nemo-tests-install.patch changes some of the Makefile.am
