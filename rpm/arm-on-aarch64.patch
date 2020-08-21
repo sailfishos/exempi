@@ -1,8 +1,8 @@
 diff --git a/XMPFiles/source/FormatSupport/MOOV_Support.hpp b/XMPFiles/source/FormatSupport/MOOV_Support.hpp
-index 7d34ca2..f948c69 100644
+index 9dc785c..b8b5e7b 100644
 --- a/XMPFiles/source/FormatSupport/MOOV_Support.hpp
 +++ b/XMPFiles/source/FormatSupport/MOOV_Support.hpp
-@@ -166,9 +166,9 @@ public:
+@@ -170,9 +170,9 @@ public:
  
  	#pragma pack( pop )
  
@@ -15,10 +15,10 @@ index 7d34ca2..f948c69 100644
  	// ---------------------------------------------------------------------------------------------
  
 diff --git a/XMPFiles/source/FormatSupport/ReconcileTIFF.cpp b/XMPFiles/source/FormatSupport/ReconcileTIFF.cpp
-index 7e89b0e..2b09bef 100644
+index 33d4673..962734a 100644
 --- a/XMPFiles/source/FormatSupport/ReconcileTIFF.cpp
 +++ b/XMPFiles/source/FormatSupport/ReconcileTIFF.cpp
-@@ -469,12 +469,12 @@ ImportSingleTIFF_SRational ( const TIFF_Manager::TagInfo & tagInfo, const bool n
+@@ -467,12 +467,12 @@ ImportSingleTIFF_SRational ( const TIFF_Manager::TagInfo & tagInfo, const bool n
  {
  	try {	// Don't let errors with one stop the others.
  
@@ -34,7 +34,7 @@ index 7e89b0e..2b09bef 100644
  		XMP_Int32 binDenom = GetUns32AsIs ( &binPtr[1] );
  		if ( ! nativeEndian ) {
 diff --git a/XMPFiles/source/FormatSupport/TIFF_MemoryReader.cpp b/XMPFiles/source/FormatSupport/TIFF_MemoryReader.cpp
-index fcf9e43..5bc415b 100644
+index 5775b8a..0bcfb4e 100644
 --- a/XMPFiles/source/FormatSupport/TIFF_MemoryReader.cpp
 +++ b/XMPFiles/source/FormatSupport/TIFF_MemoryReader.cpp
 @@ -93,7 +93,7 @@ void TIFF_MemoryReader::SortIFD ( TweakedIFDInfo* thisIFD )
@@ -46,7 +46,7 @@ index fcf9e43..5bc415b 100644
  					TweakedIFDEntry temp = ifdEntries[i];
  					++j;	// ! So the insertion index becomes j.
  					memmove ( &ifdEntries[j+1], &ifdEntries[j], 12*(i-j) );	// FAILED -- AUDIT: Safe, moving less than i entries to a location before i.
-@@ -659,7 +659,7 @@ XMP_Uns32 TIFF_MemoryReader::ProcessOneIFD ( XMP_Uns32 ifdOffset, XMP_Uns8 ifd )
+@@ -688,7 +688,7 @@ XMP_Uns32 TIFF_MemoryReader::ProcessOneIFD ( XMP_Uns32 ifdOffset, XMP_Uns8 ifd,
  
  		if ( (GetUns16AsIs(&thisEntry->type) < kTIFF_ByteType) || (GetUns16AsIs(&thisEntry->type) > kTIFF_LastType) ) continue;	// Bad type, skip this tag.
  
@@ -56,10 +56,10 @@ index fcf9e43..5bc415b 100644
  			thisEntry->bytes *= (XMP_Uns32)kTIFF_TypeSizes[thisEntry->type];
  			if ( thisEntry->bytes > 4 ) {
 diff --git a/public/include/XMP_Environment.h b/public/include/XMP_Environment.h
-index d8bab98..4828b3e 100644
+index 55b4f7b..ccc176b 100644
 --- a/public/include/XMP_Environment.h
 +++ b/public/include/XMP_Environment.h
-@@ -152,6 +152,12 @@
+@@ -154,6 +154,12 @@
  // UNIX Specific Settings
  // ======================
  #if (XMP_UNIXBuild)
@@ -70,10 +70,10 @@ index d8bab98..4828b3e 100644
 +		#define ARM_ON_AARCH64 0
 +	#endif
  	#define XMP_HELPER_DLL_IMPORT
- 	#define XMP_HELPER_DLL_EXPORT
- 	#define XMP_HELPER_DLL_PRIVATE
+ 	#define XMP_HELPER_DLL_EXPORT __attribute__ ((visibility ("default")))
+ 	#define XMP_HELPER_DLL_PRIVATE __attribute__ ((visibility ("hidden")))
 diff --git a/source/EndianUtils.hpp b/source/EndianUtils.hpp
-index 6581f18..b95eaa1 100644
+index 41a5a95..85de9f5 100644
 --- a/source/EndianUtils.hpp
 +++ b/source/EndianUtils.hpp
 @@ -13,9 +13,9 @@
@@ -107,7 +107,7 @@ index 6581f18..b95eaa1 100644
  // -------------------------------------------------------------------------------------------------
  
 diff --git a/source/UnicodeConversions.cpp b/source/UnicodeConversions.cpp
-index b4de085..5ebf44f 100644
+index 39e4413..d951b59 100644
 --- a/source/UnicodeConversions.cpp
 +++ b/source/UnicodeConversions.cpp
 @@ -13,7 +13,7 @@
