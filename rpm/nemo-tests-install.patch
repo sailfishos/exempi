@@ -1,45 +1,39 @@
 diff --git a/exempi/Makefile.am b/exempi/Makefile.am
-index 4a65f91..9354863 100644
+index 4efd9a7..d9b9a8f 100644
 --- a/exempi/Makefile.am
 +++ b/exempi/Makefile.am
 @@ -34,7 +34,7 @@
  # OF THE POSSIBILITY OF SUCH DAMAGE.
  #
  
--SUBDIRS = tests
-+SUBDIRS = . tests
- DIST_SUBDIRS = tests doc
+-SUBDIRS =
++SUBDIRS = .
+ DIST_SUBDIRS = doc
  
  exempidir = $(includedir)/@EXEMPI_INCLUDE_BASE@/exempi
-diff --git a/exempi/tests/Makefile.am b/exempi/tests/Makefile.am
-index 7c92001..89b70d1 100644
---- a/exempi/tests/Makefile.am
-+++ b/exempi/tests/Makefile.am
-@@ -109,6 +109,12 @@ testcpp_SOURCES = testcpp.cpp utils.cpp
- testcpp_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@
+@@ -158,6 +158,12 @@ testcpp_SOURCES = tests/testcpp.cpp tests/utils.cpp
+ testcpp_LDADD = libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@
  testcpp_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@
  
 +nemotestsbindir = /opt/tests/exempi/bin
 +nemotestsdatadir = /opt/tests/exempi/data
 +
 +nemotestsbin_PROGRAMS = $(check_PROGRAMS)
-+nemotestsdata_DATA = test1.xmp fdo18635.jpg
++nemotestsdata_DATA = $(check_DATA)
 +
- testwebp_SOURCES = test-webp.cpp utils.cpp
- testwebp_LDADD = ../libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@
+ testwebp_SOURCES = tests/test-webp.cpp tests/utils.cpp
+ testwebp_LDADD = libexempi.la @BOOST_UNIT_TEST_FRAMEWORK_LIBS@
  testwebp_LDFLAGS = -static @BOOST_UNIT_TEST_FRAMEWORK_LDFLAGS@
 diff --git a/exempi/tests/test-tiff-leak.cpp b/exempi/tests/test-tiff-leak.cpp
-index 729cced..d8341a2 100644
+index 729cced..27a7850 100644
 --- a/exempi/tests/test-tiff-leak.cpp
 +++ b/exempi/tests/test-tiff-leak.cpp
-@@ -54,8 +54,9 @@ int test_main(int argc, char *argv[])
+@@ -54,8 +54,7 @@ int test_main(int argc, char *argv[])
  {
    prepare_test(argc, argv, "../../samples/testfiles/BlueSquare.jpg");
  
 -  std::string orig_tiff_file =
 -    g_src_testdir + "../../samples/testfiles/BlueSquare.tif";
-+  //std::string orig_tiff_file =
-+  //  g_src_testdir + "../../samples/testfiles/BlueSquare.tif";
 +  std::string orig_tiff_file = "/opt/tests/exempi/data/BlueSquare.tif";
    BOOST_CHECK(copy_file(orig_tiff_file, "test.tif"));
    BOOST_CHECK(chmod("test.tif", S_IRUSR | S_IWUSR) == 0);
@@ -78,14 +72,13 @@ index 5ebc13d..ca71544 100644
  	-Wno-multichar -Wno-ctor-dtor-privacy
  AM_CPPFLAGS = -I$(top_srcdir)/public/include -I$(top_srcdir) \
 diff --git a/samples/testfiles/Makefile.am b/samples/testfiles/Makefile.am
-index 791f4be..26a33d7 100644
+index 791f4be..64f00d6 100644
 --- a/samples/testfiles/Makefile.am
 +++ b/samples/testfiles/Makefile.am
-@@ -37,3 +37,7 @@
+@@ -37,3 +37,6 @@
  
  EXTRA_DIST=BlueSquare.ai   BlueSquare.eps   BlueSquare.gif BlueSquare.jpg  BlueSquare.mp3  BlueSquare.png  BlueSquare.tif\
  BlueSquare.avi  BlueSquare.indd  BlueSquare.mov  BlueSquare.pdf  BlueSquare.psd  BlueSquare.wav BlueSquare.webp
 +
 +nemotestsdatadir = /opt/tests/exempi/data
 +nemotestsdata_DATA = $(EXTRA_DIST)
-+

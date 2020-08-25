@@ -1,0 +1,20 @@
+diff --git a/exempi/Makefile.am b/exempi/Makefile.am
+index 4efd9a7..ac10360 100644
+--- a/exempi/Makefile.am
++++ b/exempi/Makefile.am
+@@ -88,13 +88,13 @@ check_PROGRAMS = testexempicore testserialise \
+ 	testtiffleak testxmpfiles testxmpfileswrite \
+ 	testparse testiterator testinit testfdo18635\
+ 	testfdo83313 testcpp testwebp \
+-	testadobesdk testxmpformat \
++	testxmpformat \
+ 	$(NULL)
+ TESTS = tests/testcore.sh testinit testexempicore testserialise \
+ 	testwritenewprop \
+ 	testtiffleak testxmpfiles testxmpfileswrite \
+ 	testparse testiterator testfdo18635 testfdo83313 testcpp testwebp \
+-	testadobesdk testxmpformat \
++	testxmpformat \
+ 	$(NULL)
+ TESTS_ENVIRONMENT = TEST_DIR=$(srcdir)/tests BOOST_TEST_CATCH_SYSTEM_ERRORS=no VALGRIND="$(VALGRIND)"
+ LOG_COMPILER = $(VALGRIND)
