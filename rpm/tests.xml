@@ -50,8 +50,8 @@
 			</case>
 		</set>
 		<set name="exempi_unit_tests">
-			<case name="exempi_test3">
-				<step>/opt/tests/exempi/bin/test3 /opt/tests/exempi/data/test1.xmp</step>
+			<case name="exempi_testiterator">
+				<step>/opt/tests/exempi/bin/testiterator /opt/tests/exempi/data/test1.xmp</step>
 			</case>
 			<case name="exempi_testcpp">
 				<step>/opt/tests/exempi/bin/testcpp</step>
