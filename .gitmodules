@@ -1,3 +1,3 @@
 [submodule "exempi"]
 	path = exempi
-	url = https://git.sailfishos.org/mirror/exempi.git
+	url = https://github.com/sailfishos-mirror/exempi.git
